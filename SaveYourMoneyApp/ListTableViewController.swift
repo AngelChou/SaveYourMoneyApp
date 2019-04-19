@@ -8,7 +8,10 @@
 
 import UIKit
 
-extension ListTableViewController: DetailTableViewControllerDelegate {
+class ListTableViewController: UITableViewController, DetailTableViewControllerDelegate {
+
+    var records = [Record]()
+    
     func update(record: Record) {
         if let indexPath = tableView.indexPathForSelectedRow {
             records[indexPath.row] = record
@@ -20,11 +23,7 @@ extension ListTableViewController: DetailTableViewControllerDelegate {
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
     }
-}
-
-class ListTableViewController: UITableViewController {
-
-    var records = [Record]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -17,8 +17,8 @@ class DetailTableViewController: UITableViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var costTextField: UITextField!
     
-    var record: Record?
     var delegate: DetailTableViewControllerDelegate?
+    var record: Record?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +31,18 @@ class DetailTableViewController: UITableViewController {
     }
 
     @IBAction func SaveButtonPressed(_ sender: Any) {
-        if let title = titleTextField.text, let cost = costTextField.text {
+        if titleTextField.text?.isEmpty == false,
+            costTextField.text?.isEmpty == false,
+            let title = titleTextField.text,
+            let cost = costTextField.text {
+            
             record = Record(title: title, cost: cost, type: typeSegment.selectedSegmentIndex)
             delegate?.update(record: record!)
             navigationController?.popViewController(animated: true)
+        } else {
+            let alertController = UIAlertController(title: "Oops", message: "有資料還沒輸入哦", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alertController, animated: true, completion: nil)
         }
     }
-    
 }

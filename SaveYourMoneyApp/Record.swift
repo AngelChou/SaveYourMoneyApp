@@ -13,3 +13,5 @@ struct Record {
     var cost: String
     var type: Int
 }
+
+

@@ -8,10 +8,28 @@
 
 import Foundation
 
-struct Record {
+struct Record: Codable {
     var title: String
     var cost: String
     var type: Int
+    
+    static func saveToFile(records: [Record]) {
+        let propertyEncoder = PropertyListEncoder()
+        if let data = try? propertyEncoder.encode(records) {
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(data, forKey: "records")
+        }
+    }
+    
+    static func readFromFile() -> [Record]? {
+        let userDefaults = UserDefaults.standard
+        let propertyDecoder = PropertyListDecoder()
+        if let data = userDefaults.data(forKey: "records"), let records = try? propertyDecoder.decode([Record].self, from: data) {
+            return records
+        } else {
+            return nil
+        }
+    }
 }
 
 

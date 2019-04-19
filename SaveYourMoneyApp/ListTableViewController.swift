@@ -14,13 +14,16 @@ class ListTableViewController: UITableViewController, DetailTableViewControllerD
     
     func update(record: Record) {
         if let indexPath = tableView.indexPathForSelectedRow {
+            // 修改點選cell的資料內容
             records[indexPath.row] = record
             tableView.reloadRows(at: [indexPath], with: .automatic)
+            Record.saveToFile(records: records)
         } else {
-            // 新增一筆記錄到第一列
+            // 新增一筆資料到第一列
             records.insert(record, at: 0)
             let newIndexPath = IndexPath(row: 0, section: 0)
             tableView.insertRows(at: [newIndexPath], with: .automatic)
+            Record.saveToFile(records: records)
         }
     }
     
@@ -28,6 +31,9 @@ class ListTableViewController: UITableViewController, DetailTableViewControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let records = Record.readFromFile() {
+            self.records = records
+        }
     }
 
     // MARK: - Table view data source
@@ -72,9 +78,8 @@ class ListTableViewController: UITableViewController, DetailTableViewControllerD
             // Delete the row from the data source
             records.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            Record.saveToFile(records: records)
+        }
     }
     
 

@@ -113,5 +113,17 @@ class ListTableViewController: UITableViewController, DetailTableViewControllerD
         }
     }
     
-
+    @IBAction func trashButtonClicked(_ sender: Any) {
+        let controller = UIAlertController(title: "清除資料", message: "確定要清空所有資料", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+            Record.deleteFile()
+            self.records.removeAll()
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        controller.addAction(okAction)
+        controller.addAction(cancelAction)
+        present(controller, animated: true, completion: nil)
+    }
+    
 }

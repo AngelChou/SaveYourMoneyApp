@@ -13,21 +13,50 @@ struct Record: Codable {
     var cost: String
     var type: Int
     
+    static let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let key = "records"
+    
     static func saveToFile(records: [Record]) {
+        
         let propertyEncoder = PropertyListEncoder()
         if let data = try? propertyEncoder.encode(records) {
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(data, forKey: "records")
+            
+            // Method1: Document Directory
+            let url = Record.documentDirectory.appendingPathComponent(key)
+            try? data.write(to: url)
+            
+//            // Method2: UserDefaults
+//            let userDefaults = UserDefaults.standard
+//            userDefaults.set(data, forKey: key)
         }
     }
     
     static func readFromFile() -> [Record]? {
-        let userDefaults = UserDefaults.standard
         let propertyDecoder = PropertyListDecoder()
-        if let data = userDefaults.data(forKey: "records"), let records = try? propertyDecoder.decode([Record].self, from: data) {
+        
+        // Method1: Document Directory
+        let url = Record.documentDirectory.appendingPathComponent(key)
+        if let data = try? Data(contentsOf: url), let records = try? propertyDecoder.decode([Record].self, from: data) {
             return records
         } else {
             return nil
+        }
+        
+//        // Method2: UserDefaults
+//        let userDefaults = UserDefaults.standard
+//        if let data = userDefaults.data(forKey: key), let records = try? propertyDecoder.decode([Record].self, from: data) {
+//            return records
+//        } else {
+//            return nil
+//        }
+    }
+    
+    static func deleteFile() {
+        do {
+            let url = Record.documentDirectory.appendingPathComponent(key)
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

@@ -31,6 +31,10 @@ class DetailTableViewController: UITableViewController {
     }
 
     @IBAction func SaveButtonPressed(_ sender: Any) {
+        //收起鍵盤
+        self.view.endEditing(true)
+        
+        //檢查所有欄位
         if titleTextField.text?.isEmpty == false,
             costTextField.text?.isEmpty == false,
             let title = titleTextField.text,

@@ -13,7 +13,6 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SaveYourMoneyApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -22,6 +21,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-258" y="-216"/>
         </scene>
@@ -52,6 +52,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Save Your Money" id="xc9-Xk-V8i">
+                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="YNm-gO-eQc">
+                            <connections>
+                                <action selector="trashButtonClicked:" destination="ycu-iE-EUN" id="dLe-O1-qzp"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Rc0-hQ-cyp">
                             <connections>
                                 <segue destination="kF8-5f-ogl" kind="show" id="IjD-hd-uYW"/>
@@ -213,6 +218,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IjD-hd-uYW"/>
+        <segue reference="Uhb-8i-gsJ"/>
     </inferredMetricsTieBreakers>
 </document>
